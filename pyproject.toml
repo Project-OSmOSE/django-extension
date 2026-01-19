@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "django-extended"
+version = "0.0.0"
+description = "Extended class for Django usage"
+authors = ["Elodie Morin <elodie.morin@ensta-bretagne.fr>"]
+readme = "README.md"
+license = "MIT"
+packages = [
+    { include = "django_extended", from = 'src' }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<4.0"
+Django = "^3.2"
+djangorestframework = "^3.12.4"
+graphene-django = "^3.2.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

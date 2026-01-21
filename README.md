@@ -9,7 +9,7 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
     ...,
-    "DEFAULT_FILTER_BACKENDS": ["django_extension.viewsets.ModelFilter"],
+    "DEFAULT_FILTER_BACKENDS": ["django_extension.filters.ModelFilter"],
 }
 ```
 

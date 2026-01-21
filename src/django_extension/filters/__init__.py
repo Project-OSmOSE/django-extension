@@ -1,19 +1,20 @@
 import json
+from typing import Optional
 
 from django.core.exceptions import FieldError
 from django.db.models import Q
 from rest_framework import filters
 from rest_framework.request import Request
 
-
 __all__ = [
     'ModelFilter',
+    'get_boolean_query_param',
 ]
 
 class ModelFilter(
-    filters.SearchFilter,
+    filters.BaseFilterBackend
 ):
-    """Common filter for model viewsets"""
+    """Common filter for model filters"""
 
     def filter_queryset(self, request: Request, queryset, view):
         _queryset = super().filter_queryset(request, queryset, view)
@@ -37,3 +38,14 @@ class ModelFilter(
             except FieldError:
                 continue
         return _queryset.distinct()
+
+def get_boolean_query_param(request: Request, label: str) -> Optional[bool]:
+    """Recover boolean query param as bool"""
+    param = request.query_params.get(label)
+    if param is None:
+        return None
+    if isinstance(param, bool):
+        return param
+    if isinstance(param, str):
+        return param.lower() == "true"
+    return False

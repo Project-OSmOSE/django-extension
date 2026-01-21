@@ -1,6 +1,8 @@
 from django.db.models import CheckConstraint, F, Q
 
-__all__ = ['NoSelfParentConstraint']
+__all__ = [
+    'NoSelfParentConstraint'
+]
 
 class NoSelfParentConstraint(CheckConstraint):
     def __init__(self, name:str, **kwargs):

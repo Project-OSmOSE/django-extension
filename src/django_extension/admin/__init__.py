@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.utils.safestring import mark_safe
 from rest_framework.serializers import ModelSerializer
 
-from django_extended.serializers import SimpleSerializer
+from django_extension.serializers import SimpleSerializer
 
 __all__ = ['ExtendedModelAdmin', 'HiddenModelAdmin', 'JSONExportModelAdmin']
 

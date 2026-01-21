@@ -4,12 +4,12 @@
 ```python
 INSTALLED_APPS = [
     ...,
-    "django_extended"
+    "django_extension"
 ]
 
 REST_FRAMEWORK = {
     ...,
-    "DEFAULT_FILTER_BACKENDS": ["django_extended.viewsets.ModelFilter"],
+    "DEFAULT_FILTER_BACKENDS": ["django_extension.viewsets.ModelFilter"],
 }
 ```
 

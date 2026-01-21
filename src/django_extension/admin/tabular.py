@@ -1,7 +1,7 @@
 from django.contrib.admin import TabularInline
 from django.db.models import Model
 
-from django_extended.models import ExtendedEnum
+from django_extension.models import ExtendedEnum
 
 
 # class ExtendedTabularInline(TabularInline):

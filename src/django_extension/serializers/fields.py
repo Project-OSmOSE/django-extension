@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 __all__ = [
-    'EnumField'
+    'EnumField',
 ]
 
 class EnumField(serializers.ChoiceField):
@@ -17,9 +17,11 @@ class EnumField(serializers.ChoiceField):
         return self.enum(value).label
 
     def to_internal_value(self, data):
-
-        index = self.enum.labels.index(data)
-        value = self.enum.values[index]
+        try:
+            index = self.enum.labels.index(data)
+            value = self.enum.values[index]
+        except ValueError:
+            value = data.value  # Handle GQL Input enums
         try:
             return self.enum(value)
         except KeyError:

@@ -1,7 +1,10 @@
 from django import forms
 from django.contrib.admin.widgets import AutocompleteMixin
 
-__all__ = ['AdminAutocompleteSelectWidget']
+__all__ = [
+    'AdminAutocompleteSelectWidget',
+    'AdminAutocompleteSelectMultipleWidget',
+]
 
 # Base Source - https://stackoverflow.com/a/79216626
 # Posted by rptmat57

@@ -1,13 +1,19 @@
+from typing import Optional
+
 import graphene
+from django_extension.schema.permissions import GraphQLPermissions, GraphQLResolve
+from graphene import Mutation
 from graphene_django.rest_framework.mutation import SerializerMutation
 from rest_framework import serializers
 
 __all__ = [
     'ModelPostMutation',
-    'ModelDeleteMutation'
+    'ModelDeleteMutation',
 ]
 
+
 class ModelPostMutation(SerializerMutation):
+    # TODO: replace by 'ExtendedModelFormMutation'
     class Meta:
         abstract = True
 
@@ -25,8 +31,10 @@ class ModelPostMutation(SerializerMutation):
             convert_choices_to_enum=True,
             _meta=None,
             optional_fields=(),
+            permission: Optional[GraphQLPermissions] = None,
             **options
     ):
+        cls.permission = permission
         return super().__init_subclass_with_meta__(
             lookup_field,
             serializer_class,
@@ -42,6 +50,9 @@ class ModelPostMutation(SerializerMutation):
 
     @classmethod
     def perform_mutate(cls, serializer, info):
+        if cls.permission is not None:
+            GraphQLResolve(permission=cls.permission).check_permission(info.context.user)
+
         obj = serializer.save()
 
         kwargs = {}
@@ -55,7 +66,7 @@ class ModelPostMutation(SerializerMutation):
         return cls(errors=None, data=obj, ok=True, **kwargs)
 
 
-class ModelDeleteMutation(graphene.Mutation):
+class ModelDeleteMutation(Mutation):
     class Meta:
         abstract = True
 
@@ -70,9 +81,11 @@ class ModelDeleteMutation(graphene.Mutation):
             arguments=None,
             model_class=None,
             _meta=None,
+            permission: Optional[GraphQLPermissions] = None,
             **options
     ):
         cls.model_class = model_class
+        cls.permission = permission
         super().__init_subclass_with_meta__(
             interfaces, resolver, output, arguments, _meta, **options
         )
@@ -82,6 +95,9 @@ class ModelDeleteMutation(graphene.Mutation):
 
     @classmethod
     def mutate(cls, root, info, **kwargs):
+        if cls.permission is not None:
+            GraphQLResolve(permission=cls.permission).check_permission(info.context.user)
+
         obj = cls.model_class.objects.get(pk=kwargs["id"])
         obj.delete()
         return cls(ok=True)

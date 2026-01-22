@@ -14,6 +14,8 @@ python = ">=3.9,<4.0"
 Django = "^3.2"
 djangorestframework = "^3.12.4"
 graphene-django = "^3.2.3"
+graphene-django-pagination = {url = "https://github.com/instruct-br/graphene-django-pagination/archive/master.zip"}
+graphene-django-optimizer = "^0.10.0"
 
 [build-system]
 requires = ["poetry-core"]

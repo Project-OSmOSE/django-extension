@@ -5,10 +5,19 @@ from django.core.exceptions import FieldError
 from django.db.models import Q
 from rest_framework import filters
 from rest_framework.request import Request
+from django_filters import FilterSet
+from django_filters.filterset import FILTER_FOR_DBFIELD_DEFAULTS
+from django.db.models import UUIDField
+
+from .id import IDFilter
 
 __all__ = [
+    # filters
+    'IDFilter',
+
     'ModelFilter',
     'get_boolean_query_param',
+    'ExtendedFilterSet',
 ]
 
 class ModelFilter(
@@ -49,3 +58,11 @@ def get_boolean_query_param(request: Request, label: str) -> Optional[bool]:
     if isinstance(param, str):
         return param.lower() == "true"
     return False
+
+class ExtendedFilterSet(FilterSet):
+    """Extend FilterSet with custom filters"""
+
+    FILTER_DEFAULTS = {
+        **FILTER_FOR_DBFIELD_DEFAULTS,
+        UUIDField: {"filter_class": IDFilter},
+    }

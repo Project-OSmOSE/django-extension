@@ -39,9 +39,14 @@ class ContentTypeAutocompleteSelectField(forms.ChoiceField):
         return f"{value._meta.app_label}.{value._meta.model_name}--{value.pk}"
 
     def clean(self, value):
+        is_none = False
         if value == '-':
             value = None
+            is_none = True
         value = super().clean(value)
+        if is_none:
+            # Return after clean to allow common behavior on required fields
+            return None
         ct, pk = value.split('--')
         app, model = ct.split('.')
         return ContentType.objects.get(

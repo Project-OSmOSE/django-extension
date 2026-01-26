@@ -25,7 +25,7 @@ class ByIdField(graphene.Field):
         self.permission = permission
         super().__init__(type_, args, id=graphene.ID(required=True), resolver=self.resolve, *extra_args, **kwargs)
 
-    def resolve(self, info, id: int):
+    def resolve(self, _, info, id: int):
         if self.permission is not None:
             GraphQLResolve(permission=self.permission).check_permission(
                 info.context.user

@@ -94,7 +94,7 @@ class ExtendedNode(DjangoObjectType):
             return queryset.filter_viewable_by(
                 user=info.context.user,
             )
-        return cls._meta.context_filter.get_queryset(info.context, queryset=queryset)
+        return queryset
 
     @classmethod
     def get_queryset(cls, queryset: QuerySet, info: GraphQLResolveInfo):
@@ -102,3 +102,5 @@ class ExtendedNode(DjangoObjectType):
         return graphene_django_optimizer.query(
             cls.resolve_queryset(queryset, info), info
         )
+
+

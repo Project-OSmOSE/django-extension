@@ -26,7 +26,6 @@ class ModelFilter(
     """Common filter for model filters"""
 
     def filter_queryset(self, request: Request, queryset, view):
-        _queryset = super().filter_queryset(request, queryset, view)
         for param in request.query_params:
             try:
                 value = request.query_params[param]
@@ -35,18 +34,18 @@ class ModelFilter(
                 if is_negation:
                     key = param[:-1]
                 try:
-                    filter = Q(**{key: json.loads(value)})
+                    f = Q(**{key: json.loads(value)})
                     if is_negation:
-                        filter = ~filter
-                    _queryset = _queryset.filter(filter)
+                        f = ~f
+                    queryset = queryset.filter(f)
                 except (json.JSONDecodeError, TypeError):
-                    filter = Q(**{key: value})
+                    f = Q(**{key: value})
                     if is_negation:
-                        filter = ~filter
-                    _queryset = _queryset.filter(filter)
+                        f = ~f
+                    queryset = queryset.filter(f)
             except FieldError:
                 continue
-        return _queryset.distinct()
+        return queryset.distinct()
 
 def get_boolean_query_param(request: Request, label: str) -> Optional[bool]:
     """Recover boolean query param as bool"""

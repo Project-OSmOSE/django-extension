@@ -3,24 +3,23 @@ import logging
 from graphene_django.views import GraphQLView
 from rest_framework import permissions
 from rest_framework.decorators import permission_classes, authentication_classes, api_view
-from rest_framework.renderers import BaseRenderer
 from rest_framework.request import Request
 from rest_framework.settings import api_settings
+
+from .authentication import BearerTokenAuthentication
+from .renderer import CSVRenderer
 
 logger = logging.getLogger(__name__)
 
 __all__ = [
-    'CSVRenderer',
     'DRFAuthenticatedGraphQLView',
+
+    # Authentication
+    'BearerTokenAuthentication',
+
+    # Renderer
+    'CSVRenderer',
 ]
-
-class CSVRenderer(BaseRenderer):
-    """Custom renderer for CSV files"""
-
-    media_type = "text/csv"
-
-    def render(self, data, accepted_media_type=None, renderer_context=None):
-        return "\n".join([",".join(line) for line in data])
 
 
 class DRFAuthenticatedGraphQLView(GraphQLView):

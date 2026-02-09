@@ -36,6 +36,8 @@ class ContentTypeAutocompleteSelectField(forms.ChoiceField):
     def prepare_value(self, value):
         if value is None or value == "-":
             return None
+        if type(value) is str:
+            return value
         return f"{value._meta.app_label}.{value._meta.model_name}--{value.pk}"
 
     def clean(self, value):

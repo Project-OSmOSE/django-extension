@@ -6,6 +6,9 @@ __all__ = [
     'AdminAutocompleteSelectMultipleWidget',
 ]
 
+from django.utils.safestring import mark_safe
+
+
 # Base Source - https://stackoverflow.com/a/79216626
 # Posted by rptmat57
 # Retrieved 2025-12-03, License - CC BY-SA 4.0
@@ -45,7 +48,7 @@ class AdminAutocompleteSelectWidget(forms.Select):
             }})(django.jQuery);
         </script>
         """
-        return select_html + select2_script
+        return mark_safe(select_html + select2_script)
 
     @property
     def media(self):
@@ -88,7 +91,7 @@ class AdminAutocompleteSelectMultipleWidget(forms.SelectMultiple):
             }})(django.jQuery);
         </script>
         """
-        return select_html + select2_script
+        return mark_safe(select_html + select2_script)
 
     @property
     def media(self):

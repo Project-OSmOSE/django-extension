@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-extension"
-version = "0.1.3"
+version = "0.1.4"
 description = "Extended class for Django usage"
 authors = ["Elodie Morin <elodie.morin@ensta-bretagne.fr>"]
 readme = "README.md"

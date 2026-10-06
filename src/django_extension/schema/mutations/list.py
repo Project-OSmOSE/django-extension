@@ -242,6 +242,6 @@ class ListSerializerMutation(ClientIDMutation):
             serializer.save()
             return cls(errors=None)
         errors = []
-        for e in serializer.errors:
+        for e in serializer.errors.values():
             errors.append(ErrorType.from_errors(e))
         return cls(errors=errors)

@@ -10,9 +10,9 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.9,<4.0"
-Django = ">=4.2,<4.3"
-djangorestframework = "^3.15"
+python = ">=3.12,<3.14"
+Django = ">=5.2,<5.3"
+djangorestframework = "^3.16"
 graphene-django = "^3.2.3"
 graphene-django-pagination = {url = "https://github.com/instruct-br/graphene-django-pagination/archive/master.zip"}
 graphene-django-optimizer = "^0.10.0"

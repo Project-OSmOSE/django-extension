@@ -6,4 +6,4 @@ __all__ = [
 
 class NoSelfParentConstraint(CheckConstraint):
     def __init__(self, name:str, **kwargs):
-        super().__init__(name=name, check=~Q(parent_id=F("id")))
+        super().__init__(name=name, condition=~Q(parent_id=F("id")))
